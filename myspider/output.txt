@@ -1,0 +1,16 @@
+
+http://localhost/t1.html
+ -> index.html
+ -> t2.html
+
+http://localhost/t2.html
+ -> t1.html
+ -> t3.html
+
+http://localhost/t3.html
+ -> t2.html
+ -> t4.html
+
+http://127.0.0.1/t4.html
+ -> t3.html
+

@@ -1,5 +1,3 @@
-#!/usr/bin/env python2.7
-
 # Copyright (c) 2013, Daniel Gamez
 # with the help of Israel Herraiz at URJC
 # All rights reserved.
@@ -27,35 +25,79 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-import argparse
-import pymyspider
+import urllib2
+from bs4 import BeautifulSoup as Soup
+from urlparse import urlparse, urljoin
 
-def main ():
 
-    parser = argparse.ArgumentParser ( description = "Web Spider Crawler" )
-    parser.add_argument ('url', nargs=1, help='Target URL')
-    parser.add_argument ('-n' ,
-			 '--number-of-levels', 
-			 type=int, 
-			 default=1, 
-			 help='Specify the number of levels to dive into.')
-    
-    args = parser.parse_args ()
-    
-    url = args.url.pop ()
-    
-    depth = args.number_of_levels
-    
-    # Validate URL and get URL base
-    b = pymyspider.validate_url (url)
+### URL's Retriever
 
-    if not b:
-      print "You must provide a valid URL!"
-      return
+def retrieve_links (url):
+  """This function retrieve links from the URL provided
+  The URL must be in any of these formats:
+  http://www.domain.com
+  https://www.domain.com
+  ftp://64.139.197.1
+  """
+  opener = urllib2.build_opener ()
+  
+  try:
+    t = opener.open (url).read ()
+    parser = Soup(t)
+    return [x['href'] for x in parser.findAll('a') if x.has_attr('href')]
+
+  except urllib2.URLError:
+    return []
+    
+
+### Obtain links list by depth per URL
+def links_list (url, depth):
+
+  # Base case
+  if depth == 0:
+
+    l = retrieve_links (url)
+    
+    for each in l:
+      print " - %s" % each
       
-    # Call links_list(URL, DEPTH) 
-    pymyspider.links_list(url, depth)
+    return l
+    
+  else:
+    # Get URL base on b
+    b = validate_url (url)
 
+    #if not b:
+      #return "Invalid URL"
+    
+    l = retrieve_links (url)
+    
+    for each in l:
+      
+      # Get URL base on e
+      e = validate_url (each)
+      
+      # Correct list url item
+      if not e:
+	l[l.index(each)] = urljoin(b, each)
 
-if __name__ == '__main__':
-  main ()
+    for each in l:
+      print " %s %s" % ("*"*depth, each)
+      l2 = links_list (each, depth-1)
+
+  print ""
+
+  
+### URL Validator
+    
+def validate_url (url):
+  v = urlparse(url)
+  
+  if v.scheme and v.hostname:
+    # Get URL base and hostname to form correct URL base
+    u = v.scheme + '://' + v.hostname + '/'
+    return u
+  else:
+    # Not a valid URL
+    return False
+    

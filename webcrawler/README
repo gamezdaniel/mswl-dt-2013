@@ -1,5 +1,3 @@
-#!/usr/bin/env python2.7
-
 # Copyright (c) 2013, Daniel Gamez
 # with the help of Israel Herraiz at URJC
 # All rights reserved.
@@ -27,35 +25,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-import argparse
-import pymyspider
+This is a functional Python source code written for academic purposes only
+in the Master of Libre Software at Universidad Rey Juan Carlos in Madrid, Spain.
 
-def main ():
+This application is called "webcrawler", and is able to crawl in a website or URL for certain depth.
 
-    parser = argparse.ArgumentParser ( description = "Web Spider Crawler" )
-    parser.add_argument ('url', nargs=1, help='Target URL')
-    parser.add_argument ('-n' ,
-			 '--number-of-levels', 
-			 type=int, 
-			 default=1, 
-			 help='Specify the number of levels to dive into.')
-    
-    args = parser.parse_args ()
-    
-    url = args.url.pop ()
-    
-    depth = args.number_of_levels
-    
-    # Validate URL and get URL base
-    b = pymyspider.validate_url (url)
-
-    if not b:
-      print "You must provide a valid URL!"
-      return
-      
-    # Call links_list(URL, DEPTH) 
-    pymyspider.links_list(url, depth)
-
-
-if __name__ == '__main__':
-  main ()
