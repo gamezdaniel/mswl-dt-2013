@@ -31,7 +31,13 @@ import argparse
 import pywebcrawler
 
 def main ():
-
+    """This program crawls into the URL provided.
+    It shows a list with the links present in the main URL,
+    and the following depth levels indicated by the user.
+    Example execution call:
+    webcrawler -n 1 http://www.domain.net
+    """
+    # Define parser to get arguments on the command line
     parser = argparse.ArgumentParser ( description = "Web Crawler" )
     parser.add_argument ('url', nargs=1, help='Target URL')
     parser.add_argument ('-n' ,
@@ -41,19 +47,22 @@ def main ():
 			 help='Specify the number of levels to dive into.')
     
     args = parser.parse_args ()
-    
+
+    # Obtain the URL from command line
     url = args.url.pop ()
     
+    # Obtain the number of levels to dive into the url
     depth = args.number_of_levels
     
     # Validate URL and get URL base
     b = pywebcrawler.validate_url (url)
 
+    # Abort execution if the provided URL is not valid
     if not b:
       print "You must provide a valid URL!"
       return
       
-    # Call links_list(URL, DEPTH) 
+    # Call recursive function links_list with the URL and DEPTH
     pywebcrawler.links_list(url, depth)
 
 

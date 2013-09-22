@@ -1,5 +1,5 @@
 # Copyright (c) 2013, Daniel Gamez
-# with the help of Israel Herraiz at URJC
+# with the guidance of Israel Herraiz at URJC
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without 
