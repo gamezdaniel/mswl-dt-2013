@@ -61,7 +61,8 @@ def retrieve_links (url):
 ### Obtain links list by depth per URL
 def links_list (url, depth):
   """This function obtains the list of links from the URL provided.
-  It is a recursive function which dive into indicated DEPTH.
+  It is a recursive function which dive into indicated DEPTH.  
+  It assumes "DEPTH = 0" is the current URL with no deep.
   
   Execution call example:
   links_list ('http://www.domain.org/index.html', 2)
