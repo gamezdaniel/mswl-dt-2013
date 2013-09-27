@@ -8,7 +8,7 @@ def run():
     t = lee_passwd ()
   
     for l in t:
-        # print l
+        print l
         e = l.split(":")
         user = e[0]
         shell = e[-1].rstrip("\n")
