@@ -1,0 +1,6 @@
+INSTUPread_passwd.read_passwd
+/home/dgamez/Documents/URJC/DEV TOOLS/exercises/mswl-dt-2013/lesson2/read_passwd/read_passwd.py
+INFOS:&&2|1|2|0&&2|3|2|0
+lee_passwd=3
+read_passwd.read_passwd=2
+run=1
